@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements OnResponseListene
     }
 
     @Override
-    public void onSuccess(int id, JSONObject jsonObject) {
-        switch (id){
+    public void onSuccess(int tag, JSONObject jsonObject) {
+        switch (tag){
             case LOGIN:
                 creater.run();
                 break;
@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements OnResponseListene
     }
 
     @Override
-    public void OnFailure(int id, String info) {
-        switch (id){
+    public void OnFailure(int tag, String info) {
+        switch (tag){
             case LOGIN:
                 break;
             case CATEGORY:

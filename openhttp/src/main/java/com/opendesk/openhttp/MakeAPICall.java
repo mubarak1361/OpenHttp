@@ -34,13 +34,13 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		WebServiceHelper.setEnableSession(isSessionEnabled);
+		HttpHelper.setEnableSession(isSessionEnabled);
 	}
 	
 
 	@Override
 	protected JSONObject doInBackground(Void... params) {
-		return WebServiceHelper.runService(url, jsonObject, requestType);
+		return HttpHelper.runService(url, jsonObject, requestType);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		onCommonAsyncTask.onSuccess(tag,result);
 	}
 
-	public static class Create implements APIExecuter<Create>{
+	public static class Create implements APIConnecter<Create> {
 
 		private String endPoint;
 		private RequestType requestType;
@@ -101,7 +101,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 
 
 		@Override
-		public void run() {
+		public void connect() {
 			new MakeAPICall(urlPath, jsonPostObject, requestType, onCommonAsyncTask,tag)
 					.setEnableSession(isSessionEnabled).execute();
 		}

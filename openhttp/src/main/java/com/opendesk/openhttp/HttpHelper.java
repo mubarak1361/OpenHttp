@@ -14,9 +14,9 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class WebServiceHelper {
+public class HttpHelper {
 
-	private static final WebServiceHelper webServiceHelper = new WebServiceHelper();
+	private static HttpHelper httpHelper = new HttpHelper();
 
 	private final int TIMEOUT = 1000 * 2;
 	private final String CONTENT_TYPE_KEY = "Content-Type";
@@ -31,12 +31,12 @@ public class WebServiceHelper {
 	private StringBuilder cookie = null;
 	private boolean isSessionEnabled = false;
 
-	private WebServiceHelper() {
+	private HttpHelper() {
 
 	}
 
 	public static JSONObject runService(String url, JSONObject object, RequestType request) {
-		return webServiceHelper.callService(url, object, request);
+		return httpHelper.callService(url, object, request);
 	}
 
 	private JSONObject callService(String url, JSONObject object, RequestType request) {
@@ -121,7 +121,7 @@ public class WebServiceHelper {
 	}
 
 	public static void setEnableSession(boolean enableSession) {
-		webServiceHelper.isSessionEnabled = enableSession;
+		httpHelper.isSessionEnabled = enableSession;
 	}
 
 	private StringBuilder getCookie() {
