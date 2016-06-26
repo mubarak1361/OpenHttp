@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnResponseListene
                 .setPostData(jsonObject)
                 .setTag(LOGIN)
                 .getResponse(this)
-                .run();
+                .connect();
 
         creater.setURLPath(USER_CATEGORY_PATH)
                 .setRequestType(RequestType.GET)
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnResponseListene
     public void onSuccess(int tag, JSONObject jsonObject) {
         switch (tag){
             case LOGIN:
-                creater.run();
+                creater.connect();
                 break;
             case CATEGORY:
                 break;
