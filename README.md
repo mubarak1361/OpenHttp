@@ -3,6 +3,27 @@ OpenHttp
 
 HTTP client for Android
 
+Download
+=======
+
+Maven
+=====
+```xml
+<dependency>
+  <groupId>com.github.mubarak1361</groupId>
+  <artifactId>openhttp</artifactId>
+  <version>1.0</version>
+  <type>pom</type>
+</dependency>```
+
+Gradle
+======
+```groovy
+dependencies{
+    compile 'com.github.mubarak1361:openhttp:1.0'
+}
+```
+
 License
 =======
 
