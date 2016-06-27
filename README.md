@@ -3,9 +3,6 @@ OpenHttp
 
 HTTP client for Android
 
-Download
-=======
-
 Maven
 =====
 ```xml
