@@ -49,7 +49,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		onCommonAsyncTask.onSuccess(tag,result);
 	}
 
-	public static class Create implements APIConnecter<Create> {
+	public static class Connecter implements APIConnecter<Connecter> {
 
 		private String endPoint;
 		private RequestType requestType;
@@ -59,41 +59,41 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		private int tag;
 		private boolean isSessionEnabled;
 
-		private Create(){
+		private Connecter(){
 
 		}
 
-		private Create(String endPoint,boolean isSessionEnabled){
+		private Connecter(String endPoint,boolean isSessionEnabled){
 			this.endPoint = endPoint;
 			this.isSessionEnabled = isSessionEnabled;
 		}
 
 		@Override
-		public Create setRequestType(RequestType requestType) {
+		public Connecter setRequestType(RequestType requestType) {
 			this.requestType = requestType;
 			return this;
 		}
 
 		@Override
-		public Create setURLPath(String urlPath) {
+		public Connecter setURLPath(String urlPath) {
 			this.urlPath = endPoint+urlPath;
 			return this;
 		}
 
 		@Override
-		public Create setPostData(JSONObject jsonPostObject) {
+		public Connecter setPostData(JSONObject jsonPostObject) {
 			this.jsonPostObject = jsonPostObject;
 			return this;
 		}
 
 		@Override
-		public Create getResponse(OnResponseListener onCommonAsyncTask) {
+		public Connecter getResponse(OnResponseListener onCommonAsyncTask) {
 			this.onCommonAsyncTask = onCommonAsyncTask;
 			return this;
 		}
 
 		@Override
-		public Create setTag(int tag) {
+		public Connecter setTag(int tag) {
 			this.tag = tag;
 			return this;
 		}
@@ -108,7 +108,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 
 	}
 
-	public static class Builder implements APIBuilder<Builder,Create> {
+	public static class Builder implements APIBuilder<Builder,Connecter> {
 
 		private String url;
 		private boolean isSessionEnabled;
@@ -128,8 +128,8 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		}
 
 		@Override
-		public Create build() {
-			return new Create(url,isSessionEnabled);
+		public Connecter build() {
+			return new Connecter(url,isSessionEnabled);
 		}
 	}
 

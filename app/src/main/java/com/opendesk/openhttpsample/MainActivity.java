@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements OnResponseListene
     private final int LOGIN =1;
     private final int CATEGORY = 2;
 
-    private MakeAPICall.Create creater;
+    private MakeAPICall.Connecter connecter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +35,19 @@ public class MainActivity extends AppCompatActivity implements OnResponseListene
             e.printStackTrace();
         }
 
-        creater = new MakeAPICall.Builder()
+        connecter = new MakeAPICall.Builder()
                 .setEndPoint(BASE_URL)
                 .setEnableSession(true)
                 .build();
 
-        creater.setURLPath(LOGIN_PATH)
+        connecter.setURLPath(LOGIN_PATH)
                 .setRequestType(RequestType.POST)
                 .setPostData(jsonObject)
                 .setTag(LOGIN)
                 .getResponse(this)
                 .connect();
 
-        creater.setURLPath(USER_CATEGORY_PATH)
+        connecter.setURLPath(USER_CATEGORY_PATH)
                 .setRequestType(RequestType.GET)
                 .getResponse(this)
                 .setTag(CATEGORY);
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnResponseListene
     public void onSuccess(int tag, JSONObject jsonObject) {
         switch (tag){
             case LOGIN:
-                creater.connect();
+                connecter.connect();
                 break;
             case CATEGORY:
                 break;
