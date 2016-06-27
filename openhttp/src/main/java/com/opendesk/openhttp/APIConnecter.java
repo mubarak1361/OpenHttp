@@ -3,7 +3,7 @@ package com.opendesk.openhttp;
 import org.json.JSONObject;
 
 /**
- * Created by CIPL0224 on 6/22/2016.
+ * Created by Mubarak Mohideen on 6/22/2016.
  */
 public interface APIConnecter<T> {
     public T setRequestType(RequestType requestType);

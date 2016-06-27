@@ -3,7 +3,7 @@ package com.opendesk.openhttp;
 import org.json.JSONObject;
 
 /**
- * Created by CIPL0224 on 6/20/2016.
+ * Created by Mubarak Mohideen on 6/20/2016.
  */
 public interface APIBuilder<T,C> {
     public T setEndPoint(String url);
