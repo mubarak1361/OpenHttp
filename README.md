@@ -6,7 +6,7 @@ HTTP client for Android
 License
 =======
 
-    Copyright 2013 Square, Inc.
+    Copyright 2016 OpenDesk
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
