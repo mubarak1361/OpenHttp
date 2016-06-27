@@ -14,7 +14,8 @@ Maven
   <artifactId>openhttp</artifactId>
   <version>1.0</version>
   <type>pom</type>
-</dependency>```
+</dependency>
+```
 
 Gradle
 ======
