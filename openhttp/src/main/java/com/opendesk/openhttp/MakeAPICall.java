@@ -1,8 +1,11 @@
 package com.opendesk.openhttp;
 
+import android.os.AsyncTask;
+
 import org.json.JSONObject;
 
-import android.os.AsyncTask;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 
@@ -30,10 +33,16 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		this.isSessionEnabled = isSessionEnabled;
 		return this;
 	}
+
+	private MakeAPICall setRequestProperties(Map<String,String> requestProperties){
+		HttpHelper.setRequestProperties(requestProperties);
+		return this;
+	}
 	
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
+
 		HttpHelper.setEnableSession(isSessionEnabled);
 	}
 	
@@ -58,14 +67,16 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		private OnResponseListener onCommonAsyncTask;
 		private int tag;
 		private boolean isSessionEnabled;
+		private Map<String,String> requestProperties;
 
 		private Connecter(){
 
 		}
 
-		private Connecter(String endPoint,boolean isSessionEnabled){
+		private Connecter(String endPoint,boolean isSessionEnabled,Map<String,String> requestProperties){
 			this.endPoint = endPoint;
 			this.isSessionEnabled = isSessionEnabled;
+			this.requestProperties = requestProperties;
 		}
 
 		@Override
@@ -103,7 +114,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		@Override
 		public void connect() {
 			new MakeAPICall(urlPath, jsonPostObject, requestType, onCommonAsyncTask,tag)
-					.setEnableSession(isSessionEnabled).execute();
+					.setEnableSession(isSessionEnabled).setRequestProperties(requestProperties).execute();
 		}
 
 	}
@@ -112,6 +123,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 
 		private String url;
 		private boolean isSessionEnabled;
+		private Map<String,String> requestProperties;
 
 		public Builder(){
 		}
@@ -128,8 +140,17 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		}
 
 		@Override
+		public Builder setRequestProperty(String field, String value) {
+			if(requestProperties==null){
+				requestProperties = new HashMap<String,String>();
+			}
+			requestProperties.put(field,value);
+			return this;
+		}
+
+		@Override
 		public Connecter build() {
-			return new Connecter(url,isSessionEnabled);
+			return new Connecter(url,isSessionEnabled,requestProperties);
 		}
 	}
 

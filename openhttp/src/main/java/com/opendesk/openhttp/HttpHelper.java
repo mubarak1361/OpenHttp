@@ -1,5 +1,10 @@
 package com.opendesk.openhttp;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -8,11 +13,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.util.Log;
 
 public class HttpHelper {
 
@@ -30,22 +30,33 @@ public class HttpHelper {
 	private OutputStream outputStream;
 	private StringBuilder cookie = null;
 	private boolean isSessionEnabled = false;
+	private Map<String,String> requestProperties;
 
 	private HttpHelper() {
 
 	}
 
-	public static JSONObject runService(String url, JSONObject object, RequestType request) {
-		return httpHelper.callService(url, object, request);
+	public static void setRequestProperties(Map<String,String> requestProperties){
+		httpHelper.requestProperties = requestProperties;
 	}
 
-	private JSONObject callService(String url, JSONObject object, RequestType request) {
+	public static JSONObject runService(String url, JSONObject object, RequestType request) {
+		return httpHelper.httpConnect(url, object, request);
+	}
+
+	private JSONObject httpConnect(String url, JSONObject object, RequestType request) {
 		try {
 
 			httpURLConnection = (HttpURLConnection) new URL(url).openConnection();
 			httpURLConnection.setReadTimeout(TIMEOUT);
 			httpURLConnection.setConnectTimeout(TIMEOUT);
 			httpURLConnection.setRequestProperty(CONTENT_TYPE_KEY, CONTENT_TYPE_VALUE);
+
+			if(requestProperties!=null){
+				for (Map.Entry<String,String> requestProperty: requestProperties.entrySet()) {
+					httpURLConnection.setRequestProperty(requestProperty.getKey(),requestProperty.getValue());
+				}
+			}
 
 			if (cookie != null) {
 				httpURLConnection.setRequestProperty(COOKIE_KEY, cookie.toString());
