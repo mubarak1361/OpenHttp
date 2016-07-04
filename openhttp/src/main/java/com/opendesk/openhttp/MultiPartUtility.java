@@ -25,14 +25,7 @@ public class MultipartUtility {
     private OutputStream outputStream;
     private PrintWriter writer;
 
-    /**
-     * This constructor initializes a new HTTP POST request with content type
-     * is set to multipart/form-data
-     *
-     * @param requestURL
-     * @param charset
-     * @throws IOException
-     */
+
     public MultipartUtility(String requestURL, String charset)
             throws IOException {
         this.charset = charset;
@@ -51,12 +44,6 @@ public class MultipartUtility {
                 true);
     }
 
-    /**
-     * Adds a form field to the request
-     *
-     * @param name  field name
-     * @param value field value
-     */
     public void addFormField(String name, String value) {
         writer.append("--" + boundary).append(LINE_FEED);
         writer.append("Content-Disposition: form-data; name=\"" + name + "\"")
@@ -68,13 +55,6 @@ public class MultipartUtility {
         writer.flush();
     }
 
-    /**
-     * Adds a upload file section to the request
-     *
-     * @param fieldName  name attribute in <input type="file" name="..." />
-     * @param uploadFile a File to be uploaded
-     * @throws IOException
-     */
     public void addFilePart(String fieldName, File uploadFile)
             throws IOException {
         String fileName = uploadFile.getName();
@@ -103,24 +83,13 @@ public class MultipartUtility {
         writer.flush();
     }
 
-    /**
-     * Adds a header field to the request.
-     *
-     * @param name  - name of the header field
-     * @param value - value of the header field
-     */
+
     public void addHeaderField(String name, String value) {
         writer.append(name + ": " + value).append(LINE_FEED);
         writer.flush();
     }
 
-    /**
-     * Completes the request and receives response from the server.
-     *
-     * @return a list of Strings as response in case the server returned
-     * status OK, otherwise an exception is thrown.
-     * @throws IOException
-     */
+
     public List<String> finish() throws IOException {
         List<String> response = new ArrayList<String>();
         writer.append(LINE_FEED).flush();

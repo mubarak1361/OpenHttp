@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
@@ -49,7 +48,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 
 	@Override
 	protected JSONObject doInBackground(Void... params) {
-		return HttpHelper.runService(url, jsonObject, requestType);
+		return HttpHelper.connectHttp(url, jsonObject, requestType);
 	}
 
 	@Override
@@ -140,11 +139,8 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		}
 
 		@Override
-		public Builder setRequestProperty(String field, String value) {
-			if(requestProperties==null){
-				requestProperties = new HashMap<String,String>();
-			}
-			requestProperties.put(field,value);
+		public Builder setRequestProperty(Map<String,String> requestProperties) {
+				this.requestProperties = requestProperties;
 			return this;
 		}
 
