@@ -16,10 +16,9 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 	private boolean isSessionEnabled;
 
 	private MakeAPICall(){
-		super();
 	}
 
-	private MakeAPICall(String url,JSONObject jsonObject,RequestType requestType,OnResponseListener onCommonAsyncTask,int tag) {
+	public MakeAPICall(String url,JSONObject jsonObject,RequestType requestType,OnResponseListener onCommonAsyncTask,int tag) {
 		super();
 		this.url = url;
 		this.jsonObject = jsonObject;
@@ -28,12 +27,12 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		this.tag = tag;
 	}
 
-	private MakeAPICall setEnableSession(boolean isSessionEnabled){
+	public MakeAPICall setEnableSession(boolean isSessionEnabled){
 		this.isSessionEnabled = isSessionEnabled;
 		return this;
 	}
 
-	private MakeAPICall setRequestProperties(Map<String,String> requestProperties){
+	public MakeAPICall setRequestProperties(Map<String,String> requestProperties){
 		HttpHelper.setRequestProperties(requestProperties);
 		return this;
 	}
@@ -41,7 +40,6 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-
 		HttpHelper.setEnableSession(isSessionEnabled);
 	}
 	
@@ -57,7 +55,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		onCommonAsyncTask.onSuccess(tag,result);
 	}
 
-	public static class Connecter implements APIConnecter<Connecter> {
+	public static class Connector implements APIConnector<Connector> {
 
 		private String endPoint;
 		private RequestType requestType;
@@ -68,42 +66,42 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		private boolean isSessionEnabled;
 		private Map<String,String> requestProperties;
 
-		private Connecter(){
+		private Connector(){
 
 		}
 
-		private Connecter(String endPoint,boolean isSessionEnabled,Map<String,String> requestProperties){
+		Connector(String endPoint, boolean isSessionEnabled, Map<String,String> requestProperties){
 			this.endPoint = endPoint;
 			this.isSessionEnabled = isSessionEnabled;
 			this.requestProperties = requestProperties;
 		}
 
 		@Override
-		public Connecter setRequestType(RequestType requestType) {
+		public Connector setRequestType(RequestType requestType) {
 			this.requestType = requestType;
 			return this;
 		}
 
 		@Override
-		public Connecter setURLPath(String urlPath) {
+		public Connector setURLPath(String urlPath) {
 			this.urlPath = endPoint+urlPath;
 			return this;
 		}
 
 		@Override
-		public Connecter setPostData(JSONObject jsonPostObject) {
+		public Connector setPostData(JSONObject jsonPostObject) {
 			this.jsonPostObject = jsonPostObject;
 			return this;
 		}
 
 		@Override
-		public Connecter getResponse(OnResponseListener onCommonAsyncTask) {
+		public Connector getResponse(OnResponseListener onCommonAsyncTask) {
 			this.onCommonAsyncTask = onCommonAsyncTask;
 			return this;
 		}
 
 		@Override
-		public Connecter setTag(int tag) {
+		public Connector setTag(int tag) {
 			this.tag = tag;
 			return this;
 		}
@@ -118,7 +116,7 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 
 	}
 
-	public static class Builder implements APIBuilder<Builder,Connecter> {
+	public static class Builder implements APIBuilder<Builder,Connector> {
 
 		private String url;
 		private boolean isSessionEnabled;
@@ -145,8 +143,8 @@ public class MakeAPICall extends AsyncTask<Void, Void, JSONObject>{
 		}
 
 		@Override
-		public Connecter build() {
-			return new Connecter(url,isSessionEnabled,requestProperties);
+		public Connector build() {
+			return new Connector(url,isSessionEnabled,requestProperties);
 		}
 	}
 

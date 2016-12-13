@@ -32,7 +32,6 @@ public class HttpHelper {
     private final String COOKIE_KEY = "Cookie";
     private HttpURLConnection httpURLConnection;
     private int requestResponseCode;
-    private JSONObject jsonResponseObject;
     private StringBuilder sb;
     private StringBuilder cookie = null;
     private boolean isSessionEnabled = false;
@@ -90,15 +89,17 @@ public class HttpHelper {
                 if (isSessionEnabled) {
                     getCookie();
                 }
-                jsonResponseObject = new JSONObject(sb.toString());
+
+                return new JSONObject(sb.toString());
             } else
                 Log.d("Error", "Http " + requestResponseCode + " Error From URL: " + url);
+                return null;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return jsonResponseObject;
+        return null;
     }
 
     private void addFormField(String name, String value) {
@@ -211,7 +212,7 @@ public class HttpHelper {
 
             if (requestResponseCode == HttpURLConnection.HTTP_OK) {
                 sb = new StringBuilder();
-                InputStreamReader in = new InputStreamReader(httpURLConnection.getInputStream(), "iso-8859-1");
+                InputStreamReader in = new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8");
                 int read;
                 char[] buff = new char[1024];
                 while ((read = in.read(buff)) != -1) {
@@ -224,9 +225,10 @@ public class HttpHelper {
                     getCookie();
                 }
 
-                jsonResponseObject = new JSONObject(sb.toString());
+                return new JSONObject(sb.toString());
             } else
                 Log.d("Error", "Http " + requestResponseCode + " Error From URL: " + url);
+            return null;
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -239,7 +241,7 @@ public class HttpHelper {
                 httpURLConnection.disconnect();
             }
         }
-        return jsonResponseObject;
+        return null;
 
     }
 
